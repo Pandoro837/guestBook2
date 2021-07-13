@@ -33,7 +33,7 @@
 </style>
 </head>
 <body>
-	<form action = "/guestbook2/gbc" method ="get">
+	<form action = "/guestbook2/gbc" method ="post">
 		<input type = "hidden" name = "action" value = "insert">
 		<table border="1">
 		<colgroup>

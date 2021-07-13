@@ -9,7 +9,7 @@ public class GuestBookVo {
 	
 	public GuestBookVo() {
 	}
-	
+
 	public GuestBookVo(String name, String pw, String content) {
 		super();
 		this.name = name;

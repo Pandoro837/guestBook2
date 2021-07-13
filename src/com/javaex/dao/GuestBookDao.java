@@ -62,7 +62,7 @@ public class GuestBookDao {
 			query+= " 		name, ";
 			query+= " 		pw, ";
 			query+= " 		content, ";
-			query+= " 		TO_CHAR(reg_date, 'yyyy-mm-dd hh:mm:ss') reg_date ";
+			query+= " 		TO_CHAR(reg_date, 'yyyy-mm-dd hh24:mm:ss') reg_date ";
 			query+= " FROM ";
 			query+= " 		guestbook ";
 			query+= " ORDER BY reg_date ASC ";
