@@ -13,9 +13,6 @@ import javax.servlet.http.HttpServletResponse;
 import com.javaex.dao.GuestBookDao;
 import com.javaex.vo.GuestBookVo;
 
-/**
- * Servlet implementation class GuestBookControllorer
- */
 @WebServlet("/gbc")
 public class GuestBookController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
@@ -28,24 +25,64 @@ public class GuestBookController extends HttpServlet {
 		String action = request.getParameter("action");
 		
 		switch(action){
-		case "list":
-			//리스트 가져오기
-			List<GuestBookVo> guestBookList = guestBookDao.getList();
-			
-			//데이터를 어트리뷰트에 넣는다
-			request.setAttribute("guestBookList", guestBookList);
-			
-			//jsp로 포워드
-			RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/list.jsp");
-			rd.forward(request, response);
-			
-			break;
-		case "insert":
-			break;
-		case "deleteForm":
-			break;
-		case "delete":
-			break;
+			case "addList":
+			{
+				//리스트 가져오기
+				List<GuestBookVo> guestBookList = guestBookDao.getList();
+				
+				//데이터를 어트리뷰트에 넣는다
+				request.setAttribute("guestBookList", guestBookList);
+				
+				//확인용 출력
+//				for(GuestBookVo guestInfo : guestBookList)
+//					System.out.println(guestInfo);
+				
+				//jsp로 포워드
+				RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/addList.jsp");
+				rd.forward(request, response);
+			}
+				break;
+			case "insert":
+			{	
+				//파라미터를 꺼낸다
+				String name = request.getParameter("name");
+				String pw = request.getParameter("pw");
+				String content = request.getParameter("content");
+				
+				//Vo로 묶어준다
+				GuestBookVo guestBookInsert = new GuestBookVo(name, pw, content);
+				
+				//dao - > 저장
+				guestBookDao.insert(guestBookInsert);
+				
+				//리다이렉트
+				response.sendRedirect("/guestbook2/gbc?action=addList");
+			}
+				break;
+			case "deleteForm":
+			{
+				//guestBookNo를 받는다
+				String no = request.getParameter("no");
+				
+				//데이터를 어트리뷰트에 넣는다
+				request.setAttribute("no", no);
+				
+				//포워드로 보낸다
+				RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/deleteForm.jsp");
+				rd.forward(request, response);
+			}
+				break;
+			case "delete":
+			{
+				int no = Integer.parseInt(request.getParameter("no"));
+				String pw = request.getParameter("pw");
+				
+				guestBookDao.delete(pw, no);
+				
+				//리다이렉트
+				response.sendRedirect("/guestbook2/gbc?action=addList");
+			}	
+				break;
 		}
 		
 	}

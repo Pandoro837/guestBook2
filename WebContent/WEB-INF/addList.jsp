@@ -5,7 +5,7 @@
 <%@ page import="com.javaex.vo.GuestBookVo" %>
 
 <%
-	List<GuestBookVo> guestBookList = (List<GuestBookVo>)request.getAttribute("guestBookLis");
+	List<GuestBookVo> guestBookList = (List<GuestBookVo>)request.getAttribute("guestBookList");
 %>
 
 <!DOCTYPE html>
@@ -33,7 +33,8 @@
 </style>
 </head>
 <body>
-	<form action = "./insert.jsp" method ="post">
+	<form action = "/guestbook2/gbc" method ="get">
+		<input type = "hidden" name = "action" value = "insert">
 		<table border="1">
 		<colgroup>
                 <col width="75px">
@@ -64,11 +65,12 @@
 				<td style="width: 100px"><%=guestBookInfo.getName() %></td>
 				<td style="width: 280px"><%=guestBookInfo.getDate() %></td>
 				<td style="width: 65px; text-align: center;">
-						<form action = "./deleteForm.jsp" method = "post">
-							<a href = "./deleteForm.jsp?no=<%=guestBookInfo.getNo() %>">	
-							<!--파라미터 값으로 No값을 넘긴다, 파라미터를 submit으로 넘길 방법이 마땅하지 않다면, 주소에 파라미터 값을 넣어줄 수 있다 -->
-								[삭제] 
-							</a>
+						<form action = "/guestbook2/gbc" method = "get">
+							<input type = "hidden" name = "action" value = "deleteForm">
+							<input type = "hidden" name = "no" value = "<%=guestBookInfo.getNo() %>">
+							<button type = "submit">
+								삭제
+							</button> 
 						</form>
 				</td>
 			</tr>
