@@ -3,7 +3,6 @@ package com.javaex.controller;
 import java.io.IOException;
 import java.util.List;
 
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -11,6 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.javaex.dao.GuestBookDao;
+import com.javaex.util.WebUtil;
 import com.javaex.vo.GuestBookVo;
 
 @WebServlet("/gbc")
@@ -38,8 +38,8 @@ public class GuestBookController extends HttpServlet {
 //					System.out.println(guestInfo);
 			
 			//jsp로 포워드
-			RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/addList.jsp");
-			rd.forward(request, response);
+			String path = "/WEB-INF/addList.jsp";
+			WebUtil.forward(request, response, path);
 			
 		} else if("insert".equals(action)) {
 			//파라미터를 꺼낸다
@@ -54,12 +54,13 @@ public class GuestBookController extends HttpServlet {
 			guestBookDao.insert(guestBookInsert);
 			
 			//리다이렉트
-			response.sendRedirect("/guestbook2/gbc?action=addList");
+			String url = "/guestbook2/gbc?action=addList";
+			WebUtil.redirect(request, response, url);
 			
 		} else if("deleteForm".equals(action)) {
 			//포워드로 보낸다
-			RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/deleteForm.jsp");
-			rd.forward(request, response);
+			String path = "/WEB-INF/deleteForm.jsp";
+			WebUtil.forward(request, response, path);
 			
 		} else if("delete".equals(action)) {
 			//no와 pw를 받는다
@@ -69,7 +70,8 @@ public class GuestBookController extends HttpServlet {
 			guestBookDao.delete(pw, no);
 			
 			//리다이렉트
-			response.sendRedirect("/guestbook2/gbc?action=addList");
+			String url = "/guestbook2/gbc?action=addList";
+			WebUtil.redirect(request, response, url);
 		}	
 		
 	}
